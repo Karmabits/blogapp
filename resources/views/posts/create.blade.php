@@ -5,11 +5,11 @@
     {!! Form::open(['action' => 'PostsController@store', 'method'=>'Post']) !!}
         <div class="form-group">
             {{Form::label('title', 'Pavadinimas')}}
-            {{Form::text('title', '', ['class'=>'form-control', 'placeholder'=>'Maksimaliai 191 simboliai'])}}
+            {{Form::text('title', '', ['class'=>'form-control', 'placeholder'=>'Maksimaliai 255 simboliai'])}}
         </div>
         <div class="form-group">
             {{Form::label('body', 'Įrašo turinys')}}
-            {{Form::textarea('body', '', ['class'=>'form-control', 'placeholder'=>'Maksimaliai 255 simboliai'])}}
+            {{Form::textarea('body', '', ['class'=>'form-control', 'placeholder'=>'Maksimaliai 500 simboliai'])}}
         </div>
         {{Form::button('<i class="fas fa-paper-plane"></i> Skelbti', ['type' => 'submit','class'=>'btn btn-primary btn-lg'])}}
         

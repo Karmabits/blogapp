@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 
 class PostsController extends Controller
 {
@@ -15,6 +16,13 @@ class PostsController extends Controller
     public function index()
     {
         //
+        $user_id = auth()->user()->id;
+        $user = User::find($user_id);
+        $posts = Post::select("*")
+        ->where("user_id", $user_id)
+        ->orderBy("created_at", "desc")
+        ->paginate(10);
+        return view('posts.index')->with('posts', $posts);
     }
 
     /**
@@ -38,16 +46,17 @@ class PostsController extends Controller
     {
         //
         $this->validate($request,[
-            'title'=>'required|max:191',
-            'body'=> 'required|max:255'
+            'title'=>'required|max:255',
+            'body'=> 'required|max:500'
         ]);
         
         $post = new Post;
         $post->title=$request->input('title');
         $post->body=$request->input('body');
+        $post->user_id = auth()->user()->id;
         $post->save();
 
-        return redirect('./')->with('success', 'Įrašas sukurtas');
+        return redirect('/')->with('success', 'Įrašas sukurtas');
     }
 
     /**
@@ -72,6 +81,8 @@ class PostsController extends Controller
     public function edit($id)
     {
         //
+        $post= Post::find($id);
+        return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -84,6 +95,17 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request,[
+            'title'=>'required|max:255',
+            'body'=> 'required|max:500'
+        ]);
+        
+        $post = Post::find($id);
+        $post->title=$request->input('title');
+        $post->body=$request->input('body');
+        $post->save();
+
+        return redirect('/')->with('success', 'Įrašas atnaujintas');
     }
 
     /**
@@ -95,5 +117,8 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
+        $post= Post::find($id);
+        $post->delete();
+        return redirect('/')->with('success', 'Įrašas ištrintas');
     }
 }
