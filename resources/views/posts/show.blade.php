@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
           <p class="card-text">{{$post->body}}</p>
-          <a href="{{url('/')}}" class="btn btn-primary">Grįžti atgal</a>
+          <a href="{{url()->previous()}}" class="btn btn-primary">Grįžti atgal</a>
         </div>
         <div class="card-footer text-muted">
             <small>Parašytas <b>{{$post->created_at}}</b>, autorius <b>{{$post->user->name}}</b></small>

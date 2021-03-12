@@ -78,6 +78,8 @@ class PostsController extends Controller
     {
         //
         $post= Post::find($id);
+        if($post==null)
+            return redirect('/')->with('error', 'Įrašas su tokiu id neegzistuoja.');
         return view('posts.show')->with('post', $post);
     }
 

@@ -131,8 +131,13 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'title' => [
+            'max' => 'Pavadinimas negali viršyti 255 simbolių.',
+            'required' => 'Būtina įvesti įrašo pavadinimą.',
+        ],
+        'body' => [
+            'max' => 'Įrašo turinys negali viršyti 500 simbolių.',
+            'required' => 'Būtina įvesti įrašo turinį.',
         ],
     ],
 
