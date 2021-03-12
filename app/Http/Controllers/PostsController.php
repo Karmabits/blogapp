@@ -9,6 +9,15 @@ use App\Models\User;
 class PostsController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except'=>['show']]);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -18,8 +27,7 @@ class PostsController extends Controller
         //
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
-        $posts = Post::select("*")
-        ->where("user_id", $user_id)
+        $posts = Post::where("user_id", $user_id)
         ->orderBy("created_at", "desc")
         ->paginate(10);
         return view('posts.index')->with('posts', $posts);
@@ -54,9 +62,10 @@ class PostsController extends Controller
         $post->title=$request->input('title');
         $post->body=$request->input('body');
         $post->user_id = auth()->user()->id;
+        $post->active=false;
         $post->save();
 
-        return redirect('/')->with('success', 'Įrašas sukurtas');
+        return redirect('/posts')->with('success', 'Įrašas sukurtas');
     }
 
     /**
@@ -82,6 +91,10 @@ class PostsController extends Controller
     {
         //
         $post= Post::find($id);
+        //check if user is trying to edit his own post
+        if(auth()->user()->id!==$post->user_id){
+            return redirect('/')->with('error', 'Negalite redaguoti ne savo blog\'o įrašų.');
+        }
         return view('posts.edit')->with('post', $post);
     }
 
@@ -101,11 +114,15 @@ class PostsController extends Controller
         ]);
         
         $post = Post::find($id);
+        //check if user is trying to edit his own post
+        if(auth()->user()->id!==$post->user_id){
+            return redirect('/')->with('error', 'Negalite redaguoti ne savo blog\'o įrašų.');
+        }
         $post->title=$request->input('title');
         $post->body=$request->input('body');
         $post->save();
 
-        return redirect('/')->with('success', 'Įrašas atnaujintas');
+        return redirect('/posts')->with('success', 'Įrašas atnaujintas');
     }
 
     /**
@@ -118,6 +135,10 @@ class PostsController extends Controller
     {
         //
         $post= Post::find($id);
+        //check if user is trying to delete his own post
+        if(auth()->user()->id!==$post->user_id){
+            return redirect('/')->with('error', 'Negalite trinti ne savo blog\'o įrašų.');
+        }
         $post->delete();
         return redirect('/')->with('success', 'Įrašas ištrintas');
     }

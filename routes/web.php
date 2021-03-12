@@ -24,3 +24,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('posts', 'PostsController');
+
+Route::post('/changepoststatus/{id}', 'AjaxController@changePostStatus');
+Route::post('/deletepost/{id}', 'AjaxController@deletePost');

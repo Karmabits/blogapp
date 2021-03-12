@@ -7,10 +7,10 @@
       <!-- Left Side Of Navbar -->
       <ul class="navbar-nav mr-auto">
         @guest
-          <!-- Some kind of link on the left to display to non logged in users 
+          <!-- Some kind of link on the left to display to non logged in users -->
           <li class="nav-item">
             <a class="nav-link" href="{{url('/')}}">Visi blog'o įrašai</a>
-          </li>-->
+          </li>
         @else
           <li class="nav-item">
             <a class="nav-link" href="{{url('/')}}">Visi blog'o įrašai</a>

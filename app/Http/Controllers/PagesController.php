@@ -8,7 +8,7 @@ use App\Models\Post;
 class PagesController extends Controller
 {
     public function index(){
-        $posts= Post::orderBy('created_at', 'desc')->paginate(10);
+        $posts= Post::where('active', true)->orderBy('created_at', 'desc')->paginate(10);
         return view('pages.index')->with('posts', $posts);
     }
 }

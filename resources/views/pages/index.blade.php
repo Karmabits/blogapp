@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <h1>Sveiki atvykę į blog'ą</h1>
-    <p>Čia matysite visų narių paskelbtus aktyvius įrašus</p>
+    <h5>Čia matysite visų narių paskelbtus aktyvius įrašus</h5>
     @if (count($posts)>0)
     <div class="row">
         @foreach($posts as $post)
@@ -24,7 +24,7 @@
     </div>
     
     @else
-        <p>Šiuo metu nėra nei vieno blog'o įrašo.</p>
+        <h5>Šiuo metu nėra nei vieno aktyvaus blog'o įrašo.</h5>
     @endif
     
 @endsection
