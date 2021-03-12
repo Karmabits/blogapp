@@ -68,6 +68,7 @@
 
       //function to delete post
       function deletePost(id) {
+        confirm("Ar tikrai norite pašalinti šį įrašą?");
         var infoMessage = document.getElementById("infoMessage");
          $.ajax({
           headers: {
